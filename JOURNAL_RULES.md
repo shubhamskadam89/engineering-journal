@@ -120,6 +120,36 @@ browsing a folder tree. The two-folder layout exists only to give you one
 obvious starting point (`README.md`) — not to be exhaustively browsable.
 Don't optimize findability past "grep works."
 
+## 9. Git workflow — one branch, commits carry project context
+
+Everything is committed straight to `main`. No feature branches, no
+per-project branches, no merging. There is nothing here that needs
+isolating, and multiple projects append to the same concept file over
+time — branches would only produce merge conflicts on notes that are
+supposed to just keep growing.
+
+Every commit message is prefixed with the project name:
+
+```
+<project-name>: <concept-file> — <what changed>
+```
+
+Examples:
+
+```
+flashsale: distributed-idempotency — added retry dedup section
+flashsale: new concept file atomic-inventory-ops
+otp-auth: jwt-authentication — added token refresh section
+```
+
+This makes git history the project index, with no extra structure to
+maintain:
+
+```
+git log --oneline --grep="flashsale"                      # everything from one project
+git log --oneline -- concepts/distributed-idempotency.md  # one concept's history across every project
+```
+
 ---
 
 **When unsure whether to restructure: don't.** A slightly imperfect flat
